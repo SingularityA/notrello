@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Note</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}">Header</div>
+
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" th:text="${note.title}">Title</span>
+                    <p th:text="${note.text}">Text</p>
+                    <br><br>
+                    <p class="grey-text" align="right" th:text="${'Created: ' + note.created}">Created</p>
+                    <p class="grey-text" align="right" th:text="${'Last Updated: ' + note.lastUpdated}">Last Updated</p>
+                </div>
+                <div class="card-action">
+                    <a href="#" th:href="@{/note/delete/{id}(id=${note.id})}">
+                        <i class="material-icons left">delete_forever</i>
+                    </a>
+                    <a href="#" th:href="@{/note/edit/{id}(id=${note.id})}">
+                        <i class="material-icons right">edit</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="row center">
+        <a href="/note/list" class="btn-large waves-effect waves-light indigo">Back to Notes</a>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">Footer</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

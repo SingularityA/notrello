@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+</head>
+<body>
+<footer class="page-footer indigo lighten-1" th:fragment="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">About author</h5>
+                <p class="grey-text text-lighten-4">Meow</p>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Feedback</h5>
+                <ul>
+                    <li><a th:href="@{/admin}" class="white-text">Plz don't hack me</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="blue-grey-text text-lighten-3" href="https://github.com/SingularityA">SingularityA</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
