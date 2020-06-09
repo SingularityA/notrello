@@ -1,10 +1,14 @@
 package com.epam.notrello.service;
 
 import com.epam.notrello.dto.NoteDto;
+import com.epam.notrello.entity.BasicUser;
 import com.epam.notrello.entity.Note;
+import com.epam.notrello.exception.ForbiddenException;
 import com.epam.notrello.exception.NotFoundException;
 import com.epam.notrello.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,9 +21,10 @@ public class NoteService {
 
     private final NoteRepository noteRepository;
 
+    private final UserService userService;
+
     public NoteDto find(Long id) {
-        Note note = noteRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+        final Note note = getCheckedNote(id);
 
         return NoteDto.builder()
                 .id(note.getId())
@@ -31,7 +36,9 @@ public class NoteService {
     }
 
     public List<NoteDto> findAll() {
-        return noteRepository.findAllByOrderByLastUpdatedDesc().stream()
+        final BasicUser user = userService.findByName(getAuthentication().getName());
+
+        return user.getNotes().stream()
                 .map(note -> NoteDto.builder()
                         .id(note.getId())
                         .text(note.getText())
@@ -44,19 +51,20 @@ public class NoteService {
 
     public void create(NoteDto dto) {
         final LocalDateTime now = LocalDateTime.now();
+        final BasicUser user = userService.findByName(getAuthentication().getName());
         final Note note = Note.builder()
                 .text(dto.getText())
                 .title(dto.getTitle())
                 .created(now)
                 .lastUpdated(now)
+                .user(user)
                 .build();
 
         noteRepository.save(note);
     }
 
     public void update(Long id, NoteDto dto) {
-        final Note note = noteRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+        final Note note = getCheckedNote(id);
 
         note.setText(dto.getText());
         note.setTitle(dto.getTitle());
@@ -66,8 +74,26 @@ public class NoteService {
     }
 
     public void delete(Long id) {
-        if (noteRepository.existsById(id)) {
-            noteRepository.deleteById(id);
+        final Note note = getCheckedNote(id);
+
+        noteRepository.delete(note);
+    }
+
+    private Note getCheckedNote(Long id) {
+        final Note note = noteRepository
+                .findById(id)
+                .orElseThrow(NotFoundException::new);
+
+        final BasicUser user = userService.findByName(getAuthentication().getName());
+
+        if (!note.getUser().getId().equals(user.getId())) {
+            throw new ForbiddenException();
         }
+
+        return note;
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

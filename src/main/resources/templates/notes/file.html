@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>File import</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}">Header</div>
+
+<div class="container">
+    <div class="container">
+        <br><br>
+        <div class="row center">
+            <h4 class="header col s12 light">Upload note from json</h4>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col offset-s2 s8" th:action="@{/note/json/add}" th:object="${dto}" enctype="multipart/form-data" method="post">
+
+            <!-- FILE -->
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn indigo">
+                        <span>File</span>
+                        <input th:field="*{file}" name="file" type="file" accept="application/JSON">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                        <span class="helper-text red-text"
+                           th:each="error: ${#fields.errors('file')}"
+                           th:text="${error}">Validation error</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="row">
+                <a class="waves-effect waves-light btn blue-grey" th:href="@{/note/list}">
+                    <i class="material-icons right">cancel</i>Discard
+                </a>
+                <button class="btn waves-effect waves-light indigo right" type="submit" name="action">Save
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <br><br>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

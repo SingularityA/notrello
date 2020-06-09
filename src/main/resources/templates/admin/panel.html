@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin panel</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">HEADER</div>
+
+<div class="container">
+    <div class="row">
+        <br><br>
+        <div class="card-panel col offset-s2 s8 center-align">
+            <table class="highlight">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>registered</th>
+                    <th>roles</th>
+                    <th>notes</th>
+                </tr>
+                </thead>
+
+                <tbody th:each="user : ${users}">
+                <tr>
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${'' + user.registered}"></td>
+                    <td th:text="${user.roles}"></td>
+                    <td th:text="${user.notes.size()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br><br>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

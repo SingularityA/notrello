@@ -17,10 +17,10 @@
             </a>
         </div>
         <ul sec:authorize="isAuthenticated()" class="right hide-on-med-and-down">
-            <li><a href="/profile" th:text="${#httpServletRequest.remoteUser}">User Name</a></li>
+            <li><a href="/profile" sec:authentication="name">Username</a></li>
         </ul>
         <ul sec:authorize="isAuthenticated()" class="right hide-on-med-and-down">
-            <li><a href="/login?logout">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
         <ul sec:authorize="isAnonymous()" class="right hide-on-med-and-down">
             <li><a href="/register">Sign up</a></li>

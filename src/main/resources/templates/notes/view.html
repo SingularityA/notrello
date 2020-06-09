@@ -28,6 +28,9 @@
                     <a href="#" th:href="@{/note/delete/{id}(id=${note.id})}">
                         <i class="material-icons left">delete_forever</i>
                     </a>
+                    <a href="#" th:href="@{/note/json/{id}(id=${note.id})}">
+                        <i class="material-icons right">file_download</i>
+                    </a>
                     <a href="#" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="material-icons right">edit</i>
                     </a>
@@ -40,8 +43,6 @@
         <a href="/note/list" class="btn-large waves-effect waves-light indigo">Back to Notes</a>
     </div>
 </div>
-
-<div th:replace="~{fragments/footer :: footer}">Footer</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 

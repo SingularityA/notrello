@@ -21,6 +21,9 @@
             <a class="btn-floating btn-large waves-effect waves-light indigo" th:href="@{/note/add}">
                 <i class="material-icons">add</i>
             </a>
+            <a class="btn-floating btn-large waves-effect waves-light indigo" th:href="@{/note/json/add}">
+                <i class="material-icons">file_upload</i>
+            </a>
         </div>
     </div>
     <div class="section">
@@ -41,8 +44,6 @@
     </div>
     <br><br>
 </div>
-
-<div th:replace="~{fragments/footer :: footer}">Footer</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 

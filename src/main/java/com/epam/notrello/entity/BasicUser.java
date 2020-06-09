@@ -7,31 +7,30 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
+@Entity
+@Table(name = "user_credentials")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Note {
+public class BasicUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
-    private String title;
+    private String name;
 
-    @Column(length = 800)
-    private String text;
+    private String password;
 
-    @Column
-    private LocalDateTime created;
+    private String roles;
 
-    @Column
-    private LocalDateTime lastUpdated;
+    private LocalDateTime registered;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private BasicUser user;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("lastUpdated DESC")
+    private Collection<Note> notes;
+
 }
